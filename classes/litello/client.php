@@ -17,6 +17,8 @@ use function Aws\filter;
  */
 class LitelloClient
 {
+    private string $access_key;
+    private string $secret_key;
     private $signature;
     private $request;
     private $credentials;
@@ -34,7 +36,9 @@ class LitelloClient
         int $bookID = 0,
         bool $request_auth_token = false
     )
-    {        
+    {   
+        $this->access_key = $access_key;
+        $this->secret_key = $secret_key;     
         $this->credentials = new Credentials($access_key, $secret_key);
         $this->proxy_host = $proxy_host;
         $this->proxy_port = $proxy_port;
@@ -86,7 +90,6 @@ class LitelloClient
         );
         $headers=[
             "content-type"=>"application/json",
-            //"API-Key" => "lIKPG122e1aB0wZVS9qBV7e6Ce7bLpU1aZTreOnv"
         ];
         $req_params = array(
             "method" => "POST",
@@ -108,7 +111,7 @@ class LitelloClient
         }
         $headers=[
             "content-type"=>"application/json",
-            "API-Key" => "lIKPG122e1aB0wZVS9qBV7e6Ce7bLpU1aZTreOnv"
+            "API-Key" => $this->secret_key
         ];
         $req_params = array(
             "method" => "GET",
